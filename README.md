@@ -3,6 +3,8 @@ This project simulates an API to control the registration of doctors from a hosp
 
 Made using JAVA 17, spring boot, bean validation, maven, lombok, JPA and h2database.
 
+VIDEO DEMO - https://youtu.be/DUVNHhUTmmc
+
 Run the file MedApiApplication to test it.
 
 Endpoints and examples:
