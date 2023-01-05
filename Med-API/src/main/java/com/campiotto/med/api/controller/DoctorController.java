@@ -6,9 +6,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/doctor")
@@ -18,38 +20,42 @@ public class DoctorController {
     private DoctorRepository doctorRepository;
 
     @PostMapping("/create")
-    public String CreateDoctor(@RequestBody @Valid DoctorRegistration doctorRegistration) {
-        doctorRepository.save(new Doctor(doctorRegistration));
-        System.out.println(doctorRegistration);
-        return doctorRegistration.toString();
+    @Transactional
+    public ResponseEntity CreateDoctor(@RequestBody @Valid DoctorRegistration doctorRegistration, UriComponentsBuilder uriBuilder) {
+        Doctor newDoctor = new Doctor(doctorRegistration);
+        doctorRepository.save(newDoctor);
+
+        URI uri = uriBuilder.path("/{id}").buildAndExpand(newDoctor.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DoctorReturnDetails(newDoctor));
     }
 
     @PutMapping("/update")
     @Transactional
-    public String UpdateDoctor(@RequestBody @Valid DoctorUpdate doctorUpdate) {
+    public ResponseEntity UpdateDoctor(@RequestBody @Valid DoctorUpdate doctorUpdate) {
         Doctor doctor = doctorRepository.getReferenceById(doctorUpdate.id());
         doctor.update(doctorUpdate);
-        System.out.println(doctorUpdate);
-        return doctor.toString();
+        return ResponseEntity.ok(new DoctorReturnDetails(doctor));
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public String DeleteDoctor(@PathVariable Long id) {
+    public ResponseEntity DeleteDoctor(@PathVariable Long id) {
         Doctor doctor = doctorRepository.getReferenceById(id);
         doctor.deactivateDoctor();
-        System.out.println(doctor);
-        return doctor.toString();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/get-all")
-    public Page<DoctorDataExibition> ListDoctors(Pageable pageable) {
-        return doctorRepository.findAll(pageable).map(DoctorDataExibition::new);
+    public ResponseEntity<Page<DoctorDataExibition>> ListDoctors(Pageable pageable) {
+        Page<DoctorDataExibition> doctors = doctorRepository.findAll(pageable).map(DoctorDataExibition::new);
+        return ResponseEntity.ok(doctors);
     }
 
-    @GetMapping("/schedule")
-    public String CheckSchedule() {
-        return "Schedule is open!";
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorReturnDetails> DoctorDetails(@PathVariable Long id) {
+        Doctor doctor = doctorRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DoctorReturnDetails(doctor));
     }
 
 }
