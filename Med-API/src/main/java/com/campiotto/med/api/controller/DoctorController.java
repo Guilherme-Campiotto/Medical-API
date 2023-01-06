@@ -1,6 +1,6 @@
 package com.campiotto.med.api.controller;
 
-import com.campiotto.med.api.doctor.*;
+import com.campiotto.med.api.domain.doctor.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

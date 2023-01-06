@@ -1,4 +1,4 @@
-package com.campiotto.med.api.doctor;
+package com.campiotto.med.api.domain.doctor;
 
 public record DoctorDataExibition(Long id, String name, String email, String crm, Speciality speciality, boolean active) {
 

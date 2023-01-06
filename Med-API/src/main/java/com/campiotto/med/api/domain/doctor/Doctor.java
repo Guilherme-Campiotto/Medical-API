@@ -1,6 +1,6 @@
-package com.campiotto.med.api.doctor;
+package com.campiotto.med.api.domain.doctor;
 
-import com.campiotto.med.api.address.Address;
+import com.campiotto.med.api.domain.address.Address;
 import jakarta.persistence.*;
 import lombok.*;
 

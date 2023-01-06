@@ -1,6 +1,6 @@
-package com.campiotto.med.api.doctor;
+package com.campiotto.med.api.domain.doctor;
 
-import com.campiotto.med.api.address.AddressRegistration;
+import com.campiotto.med.api.domain.address.AddressRegistration;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

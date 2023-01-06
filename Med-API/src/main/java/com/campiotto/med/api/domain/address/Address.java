@@ -1,4 +1,4 @@
-package com.campiotto.med.api.address;
+package com.campiotto.med.api.domain.address;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

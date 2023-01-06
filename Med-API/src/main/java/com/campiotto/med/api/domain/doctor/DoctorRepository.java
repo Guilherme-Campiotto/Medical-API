@@ -1,4 +1,4 @@
-package com.campiotto.med.api.doctor;
+package com.campiotto.med.api.domain.doctor;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
