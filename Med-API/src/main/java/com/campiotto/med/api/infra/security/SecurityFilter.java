@@ -41,7 +41,7 @@ public class SecurityFilter  extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if(authHeader != null) {
-            return authHeader.replace("Bearer", "");
+            return authHeader.replace("Bearer", "").strip();
         }
 
         return null;
